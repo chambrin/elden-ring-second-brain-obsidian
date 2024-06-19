@@ -36,6 +36,9 @@ async function fetchItemsFromAPI(category: string) {
           }
         });
 
+        // Ajout du tag Obsidian à la fin du contenu du fichier .md
+        mdContent += `\n\n#${category}`;
+
         // Écriture du contenu dans un fichier .md
         const fileName = `${item.name.replace(/\s+/g, '_')}.md`; // Remplace les espaces par des underscores
         const dirPath = path.join(__dirname, 'dist', category);
