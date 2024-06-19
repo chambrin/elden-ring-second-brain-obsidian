@@ -1,5 +1,4 @@
 # Elden-ring-second-brain
-
 To install dependencies:
 
 ```bash
@@ -11,5 +10,18 @@ To run:
 ```bash
 bun run index.ts
 ```
+and :
 
-This project was created using `bun init` in bun v1.1.7. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+```bash
+bun run linked.ts
+```
+
+## importe dist on new Obsidian vault
+
+
+
+
+
+### Credits
+
+thanks https://github.com/deliton for 
