@@ -19,17 +19,22 @@ async function fetchItemsFromAPI(category: string) {
       const items = data.data;
 
       // Affichage de chaque item individuellement
-      items.forEach((item: { id: string; name: string; description: string; image: string; type: string; effect: string; }) => {
-        console.log('ID:', item.id);
-        console.log('Nom:', item.name);
-        console.log('Description:', item.description);
-        console.log('Image:', item.image);
-        console.log('Type:', item.type);
-        console.log('Effect:', item.effect);
-        console.log('---------------------');
-
+      items.forEach((item: any) => {
         // Création du contenu du fichier .md
-        const mdContent = `# ${item.name}\n\n![Image](${item.image})\n\n${item.description}\n\nType: ${item.type}\n\nEffect: ${item.effect}\n\n`;
+        let mdContent = `# ${item.name}\n\n![Image](${item.image})\n\n`;
+
+        // Ajout de toutes les propriétés de l'item au contenu du fichier .md
+        Object.entries(item).forEach(([key, value]) => {
+          if (key !== 'name' && key !== 'image') { // On ne répète pas le nom et l'image
+            if (Array.isArray(value)) {
+              // Si la valeur est un tableau, on la traite différemment
+              const arrayValues = value.map(obj => obj.name || obj).join(', '); // On suppose que chaque objet a une propriété 'name'
+              mdContent += `${key.charAt(0).toUpperCase() + key.slice(1)}: ${arrayValues}\n\n`;
+            } else {
+              mdContent += `${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}\n\n`; // Ajout de la clé et de la valeur au contenu du fichier .md
+            }
+          }
+        });
 
         // Écriture du contenu dans un fichier .md
         const fileName = `${item.name.replace(/\s+/g, '_')}.md`; // Remplace les espaces par des underscores
